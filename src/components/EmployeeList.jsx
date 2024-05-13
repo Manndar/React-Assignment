@@ -1,12 +1,25 @@
-import React from "react";
-import { Typography, List, ListItem, ListItemText, Button, IconButton } from '@mui/material';
+import React, { useState } from "react";
+import { Typography, List, ListItem, ListItemText, IconButton } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CustomButton from "./customComp/CustomButton";
+import ConfirmationBox from "./customComp/ConfirmationBox";
 
 const EmployeeList = ({ employees , setNewEmployeeToEdit, deleteEmployee}) => {
     const navigate = useNavigate();
+    const [confirmation, setConfirmation] = useState(false);
+    const [idToDlt, setIdToDlt] = useState(0);
 
+    const handleConfirm = (id) =>{
+        
+        handleDelete(idToDlt);
+        setConfirmation(false);
+    }
+
+    const handleCancel = () => {
+        setConfirmation(false);
+    }
     function onHomeClick() {
         navigate('/');
     }
@@ -17,8 +30,10 @@ const EmployeeList = ({ employees , setNewEmployeeToEdit, deleteEmployee}) => {
         navigate('/employee-form', {state : {employeeToEdit}});
     };
 
-    const handleDelete = (employeeId) => {
-        deleteEmployee(employeeId);
+    const handleDelete = (idToDlt) => {
+        if(idToDlt){
+            deleteEmployee(idToDlt);
+        }
         // console.log(`Delete employee with ID: ${employeeId}`);
     };
 
@@ -27,10 +42,14 @@ const EmployeeList = ({ employees , setNewEmployeeToEdit, deleteEmployee}) => {
             <Typography variant="h5" align="center" gutterBottom>
                 Registered Employees
             </Typography>
-            <Button onClick={onHomeClick}>Home</Button>
+            <CustomButton onClick={onHomeClick}>Home</CustomButton>{' '}
+            <CustomButton onClick={() => {
+            navigate(-1);
+        }}>Back</CustomButton>
+
             <List>
                 {employees.map((employee, index) => (
-                    <ListItem key={index}>
+                    <ListItem key={index} sx={{backgroundColor: index % 2 === 0 ?'whitesmoke':'#fff' }}>
                         <ListItemText
                             primary={`${employee.firstName} ${employee.lastName}`}
                             secondary={`Email: ${employee.email}, Phone Number: ${employee.phoneNumber}, Department: ${employee.department}`}
@@ -38,12 +57,19 @@ const EmployeeList = ({ employees , setNewEmployeeToEdit, deleteEmployee}) => {
                         <IconButton onClick={() => handleEdit(employee.empid)}>
                             <EditIcon />
                         </IconButton>
-                        <IconButton onClick={() => handleDelete(employee.empid)}>
+                        <IconButton onClick={() => {setConfirmation(true); setIdToDlt(employee.empid)}}>
                             <DeleteIcon />
                         </IconButton>
                     </ListItem>
                 ))}
             </List>
+            {confirmation && (
+        <ConfirmationBox
+          message="Are you sure you want to proceed?"
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+        />
+      )}
         </div>
     );
 };

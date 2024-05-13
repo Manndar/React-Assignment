@@ -7,28 +7,29 @@ import "./App.css";
 import EmployeeForm from "./components/EmployeeForm";
 import EmployeeList from "./components/EmployeeList";
 import Home from "./components/Home";
+import axios from "axios";
+import FetchedEmployeesList from "./components/FetchedEmployeesList";
+import ShowEmployeeDetails from './components/ShowEmployeeDetails';
 
 function App() {
   const [employees, setEmployees] = useState([]);
-  const [employeeToEdit, setEmployeeToEdit] = useState(null);
+  const [employeeToEdit, setEmployeeToEdit] = useState({});
  
-  
+  const [fetchedUsers, setFetchedUsers] =useState([]);
+  const [selectedEmp, setSelectedEmp] = useState({});
   useEffect(() => {
-    const storedEmployees = JSON.parse(localStorage.getItem("employees"));
-    console.log('storedEmployees',storedEmployees);
-    if (storedEmployees !== null ) {
-      setEmployees(storedEmployees);
-    }
-   
+   getUsersFromAPI();
   }, []);
   
   const handleEmployeeFormNavigation = () => {
     setEmployeeToEdit(null);
   };
 
-  useEffect(() => {
-    localStorage.setItem("employees", JSON.stringify(employees));
-  }, [employees]);
+  const getUsersFromAPI = async () => {
+    const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+    setFetchedUsers(response.data);
+  }
+
 
   const addOrUpdateEmployee = (employee) => {    
     const existingEmployeeIndex = employees.findIndex(emp => emp.empid === employee.empid);
@@ -46,8 +47,12 @@ function App() {
   }
 
   const setNewEmployeeToEdit = (employee) =>{
-    setEmployeeToEdit(employee);
-    
+    console.log("fetched employee selected", employee);
+    setEmployeeToEdit(employee);    
+  }
+  const setSelectedFetchedEmployee = (selectedEmployee) => {
+    console.log("fetched employee selected", selectedEmployee);
+    setSelectedEmp(selectedEmployee);
   }
 
   return (
@@ -57,6 +62,8 @@ function App() {
           <Route path="/" element={<Home handleEmployeeFormNavigation={handleEmployeeFormNavigation}/>}/>
           <Route path="/employee-form" element={<EmployeeForm addOrUpdateEmployee={addOrUpdateEmployee} employeeToEdit={employeeToEdit} />} />
           <Route path="/display-list" element={<EmployeeList employees={employees} setNewEmployeeToEdit={setNewEmployeeToEdit} deleteEmployee={deleteEmployee}/>} />
+          <Route path="/fetched-employees" element={<FetchedEmployeesList fetchedUsers={fetchedUsers} setSelectedFetchedEmployee={setSelectedFetchedEmployee}/>}></Route>
+          <Route path="/show-selected-employees" element={<ShowEmployeeDetails employee={selectedEmp}/>}></Route>
         </Routes>
       </div>
     </Router>

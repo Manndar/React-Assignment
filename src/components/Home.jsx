@@ -1,22 +1,35 @@
-import { Button } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import CustomButton from './customComp/CustomButton';
 
-function Home({handleEmployeeFormNavigation}) {
+function Home({ handleEmployeeFormNavigation }) {
   return (
     <div>
       <h2 style={{ color: "black" }}>Hello World</h2>
-      <Link to="/employee-form" style={{ textDecoration: 'none' }}>
-        <Button variant="outlined" onClick={handleEmployeeFormNavigation}>
+      <div style={{marginTop:'10vh'}}>
+
+      <Link to="/employee-form" >
+        <CustomButton onClick={handleEmployeeFormNavigation} >
           Employee Form
-        </Button>
+        </CustomButton>
       </Link>
       {' '}
-      <Link to="/display-list" style={{ textDecoration: 'none' }}>
-        <Button variant="outlined">
+      <Link to="/display-list" >
+        <CustomButton >
           Display List
-        </Button>
+        </CustomButton>
       </Link>
+      {' '}
+      <Link to="/fetched-employees" >
+        <CustomButton >
+          Fetched employees
+        </CustomButton>
+      </Link>
+      </div>
+      {' '}
+      {/* <CustomButton onClick={() => console.log("Button Clicked")} color='black' disabled={false}>
+        Custom Button
+      </CustomButton> */}
     </div>
   );
 }
