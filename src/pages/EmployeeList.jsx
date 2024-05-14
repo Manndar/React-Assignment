@@ -3,8 +3,8 @@ import { Typography, List, ListItem, ListItemText, IconButton } from '@mui/mater
 import { useNavigate } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import CustomButton from "./customComp/CustomButton";
-import ConfirmationBox from "./customComp/ConfirmationBox";
+import CustomButton from "../customComp/CustomButton";
+import ConfirmationBox from "../customComp/ConfirmationBox";
 
 const EmployeeList = ({ employees , setNewEmployeeToEdit, deleteEmployee}) => {
     const navigate = useNavigate();

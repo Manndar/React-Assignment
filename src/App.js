@@ -4,12 +4,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import { Button } from "@mui/material";
 import "./App.css";
 
-import EmployeeForm from "./components/EmployeeForm";
-import EmployeeList from "./components/EmployeeList";
-import Home from "./components/Home";
+import EmployeeForm from "./pages/EmployeeForm";
+import EmployeeList from "./pages/EmployeeList";
+import Home from "./pages/Home";
 import axios from "axios";
-import FetchedEmployeesList from "./components/FetchedEmployeesList";
-import ShowEmployeeDetails from './components/ShowEmployeeDetails';
+import FetchedEmployeesList from "./pages/FetchedEmployeesList";
+import ShowEmployeeDetails from './pages/ShowEmployeeDetails';
 
 function App() {
   const [employees, setEmployees] = useState([]);
@@ -47,11 +47,10 @@ function App() {
   }
 
   const setNewEmployeeToEdit = (employee) =>{
-    console.log("fetched employee selected", employee);
+    // console.log("fetched employee selected", employee);
     setEmployeeToEdit(employee);    
   }
   const setSelectedFetchedEmployee = (selectedEmployee) => {
-    console.log("fetched employee selected", selectedEmployee);
     setSelectedEmp(selectedEmployee);
   }
 
@@ -62,7 +61,7 @@ function App() {
           <Route path="/" element={<Home handleEmployeeFormNavigation={handleEmployeeFormNavigation}/>}/>
           <Route path="/employee-form" element={<EmployeeForm addOrUpdateEmployee={addOrUpdateEmployee} employeeToEdit={employeeToEdit} />} />
           <Route path="/display-list" element={<EmployeeList employees={employees} setNewEmployeeToEdit={setNewEmployeeToEdit} deleteEmployee={deleteEmployee}/>} />
-          <Route path="/fetched-employees" element={<FetchedEmployeesList fetchedUsers={fetchedUsers} setSelectedFetchedEmployee={setSelectedFetchedEmployee}/>}></Route>
+          <Route path="/fetched-employees" element={<FetchedEmployeesList fetchedUsers={fetchedUsers} setSelectedFetchedEmployee={setSelectedFetchedEmployee}/>} />
           <Route path="/show-selected-employees" element={<ShowEmployeeDetails employee={selectedEmp}/>}></Route>
         </Routes>
       </div>

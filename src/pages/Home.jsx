@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CustomButton from './customComp/CustomButton';
+import CustomButton from '../customComp/CustomButton';
 
 function Home({ handleEmployeeFormNavigation }) {
   return (
@@ -20,7 +20,7 @@ function Home({ handleEmployeeFormNavigation }) {
         </CustomButton>
       </Link>
       {' '}
-      <Link to="/fetched-employees" >
+      <Link to="/fetched-employees">
         <CustomButton >
           Fetched employees
         </CustomButton>
@@ -33,5 +33,6 @@ function Home({ handleEmployeeFormNavigation }) {
     </div>
   );
 }
+
 
 export default Home;

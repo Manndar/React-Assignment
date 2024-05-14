@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react";
-import { TextField, Button, Grid, Typography} from '@mui/material';
+import { Grid, Typography} from '@mui/material';
 import { useNavigate  } from "react-router-dom";
-import CustomButton from "./customComp/CustomButton";
+import CustomButton from "../customComp/CustomButton";
+import CustomTextField from "../customComp/CustomTextField";
 // import useEmployeeData from "../DB/EmployeeData";
 // import EmployeeList from "./EmployeeList";
 
@@ -13,12 +14,12 @@ const EmployeeForm = ({addOrUpdateEmployee, employeeToEdit}) => {
     // console.log('employeeToEdit', employeeToEdit);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        empid: employeeToEdit ? employeeToEdit.empid : Math.floor(Math.random() * 100) + 1,
-        firstName: employeeToEdit ? employeeToEdit.firstName : '',
-        lastName: employeeToEdit ? employeeToEdit.lastName : '',
-        email: employeeToEdit ? employeeToEdit.email : '',
-        phoneNumber: employeeToEdit ? employeeToEdit.phoneNumber : '',
-        department: employeeToEdit ? employeeToEdit.department : ''
+        empid:  Math.floor(Math.random() * 100) + 1,
+        firstName:  '',
+        lastName:'',
+        email:  '',
+        phoneNumber:  '',
+        department: '',
     })
 
     useEffect(() => {
@@ -65,10 +66,8 @@ const EmployeeForm = ({addOrUpdateEmployee, employeeToEdit}) => {
         {employeeToEdit ? 'Edit Employee' : 'Employee Registration Form'}
         </Typography>
         <CustomButton onClick={onHomeClick}>Home</CustomButton>
-        <form onSubmit={handleSubmit} >
-          <TextField
-            variant="outlined"
-            margin="normal"
+        <form >
+          <CustomTextField            
             required
             fullWidth
             id="firstName"
@@ -77,9 +76,7 @@ const EmployeeForm = ({addOrUpdateEmployee, employeeToEdit}) => {
             value={formData.firstName}
             onChange={handleOnChange}            
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
+          <CustomTextField            
             required
             fullWidth
             id="lastName"
@@ -88,10 +85,8 @@ const EmployeeForm = ({addOrUpdateEmployee, employeeToEdit}) => {
             value={formData.lastName}
             onChange={handleOnChange}
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
+          <CustomTextField            
+           
             fullWidth
             id="email"
             label="Email Address"
@@ -100,9 +95,8 @@ const EmployeeForm = ({addOrUpdateEmployee, employeeToEdit}) => {
             value={formData.email}
             onChange={handleOnChange}
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
+          <CustomTextField
+            
             fullWidth
             id="phoneNumber"
             label="Phone Number"
@@ -110,9 +104,8 @@ const EmployeeForm = ({addOrUpdateEmployee, employeeToEdit}) => {
             value={formData.phoneNumber}
             onChange={handleOnChange}
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
+          <CustomTextField
+            
             required
             fullWidth
             id="department"
@@ -121,19 +114,18 @@ const EmployeeForm = ({addOrUpdateEmployee, employeeToEdit}) => {
             value={formData.department}
             onChange={handleOnChange}
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-           
+          <CustomButton
+            onClick={handleSubmit}     
+            color='#007bff'
           >
             {employeeToEdit ? 'Update' : 'Register'}
-          </Button>
+          </CustomButton>
           <hr />
         <CustomButton onClick={() => {
             navigate(-1);
-        }}>Back</CustomButton>
+        }}>
+        Back
+        </CustomButton>
         </form>
       </Grid>
     </Grid>

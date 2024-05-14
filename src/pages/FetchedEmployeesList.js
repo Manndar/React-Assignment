@@ -1,7 +1,7 @@
 // import React, {useEffect, useState } from 'react'
 import React from 'react'
 import { DataGrid } from '@mui/x-data-grid'
-import CustomButton from './customComp/CustomButton';
+import CustomButton from '../customComp/CustomButton';
 import { useNavigate } from 'react-router-dom';
 
 
