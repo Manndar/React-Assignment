@@ -2,14 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CustomButton from '../customComp/CustomButton';
 
-function Home({ handleEmployeeFormNavigation }) {
+function Home() {
   return (
     <div>
       <h2 style={{ color: "black" }}>Hello World</h2>
       <div style={{marginTop:'10vh'}}>
 
-      <Link to="/employee-form" >
-        <CustomButton onClick={handleEmployeeFormNavigation} >
+      <Link to="/employee-form/:id" >
+        <CustomButton  >
           Employee Form
         </CustomButton>
       </Link>

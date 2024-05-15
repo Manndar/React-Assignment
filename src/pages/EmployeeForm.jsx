@@ -1,18 +1,16 @@
 import React, {useState, useEffect} from "react";
 import { Grid, Typography} from '@mui/material';
-import { useNavigate  } from "react-router-dom";
+import { useNavigate , useParams } from "react-router-dom";
 import CustomButton from "../customComp/CustomButton";
 import CustomTextField from "../customComp/CustomTextField";
-// import useEmployeeData from "../DB/EmployeeData";
-// import EmployeeList from "./EmployeeList";
 
 
 
-const EmployeeForm = ({addOrUpdateEmployee, employeeToEdit}) => {
-
-    // console.log('addOrUpdateEmployee', addOrUpdateEmployee);
-    // console.log('employeeToEdit', employeeToEdit);
+const EmployeeForm = ({addOrUpdateEmployee, employees}) => {   
     const navigate = useNavigate();
+    const {id} = useParams(); 
+    console.log("type id", typeof id);   
+    console.log("id", id);   
     const [formData, setFormData] = useState({
         empid:  Math.floor(Math.random() * 100) + 1,
         firstName:  '',
@@ -22,18 +20,20 @@ const EmployeeForm = ({addOrUpdateEmployee, employeeToEdit}) => {
         department: '',
     })
 
-    useEffect(() => {
-        if (employeeToEdit) {
-          setFormData({
-            empid: employeeToEdit.empid,
-            firstName: employeeToEdit.firstName,
-            lastName: employeeToEdit.lastName,
-            email: employeeToEdit.email,
-            phoneNumber: employeeToEdit.phoneNumber,
-            department: employeeToEdit.department
-          });
-        }
-      }, [employeeToEdit]);
+  useEffect(() => {
+    if (typeof id === 'string' && id !== ':id') {
+      const employee = employees.find((employee) => employee.empid === parseInt(id));
+      // console.log('employee', employee);
+      setFormData({
+        empid:employee.empid,
+        firstName:employee.firstName,
+        lastName:employee.lastName,
+        email:employee.email,
+        phoneNumber:employee.phoneNumber,
+        department:employee.department
+      })
+    }
+  },[id])
 
     const handleOnChange = (e) => {
         const {name, value} = e.target;
@@ -63,7 +63,7 @@ const EmployeeForm = ({addOrUpdateEmployee, employeeToEdit}) => {
     <Grid container justifyContent="center">
       <Grid item xs={12} sm={8} md={6}>
         <Typography variant="h5" align="center" gutterBottom>
-        {employeeToEdit ? 'Edit Employee' : 'Employee Registration Form'}
+        {(id !== ':id') ? 'Edit Employee' : 'Employee Registration Form'}
         </Typography>
         <CustomButton onClick={onHomeClick}>Home</CustomButton>
         <form >
@@ -118,7 +118,7 @@ const EmployeeForm = ({addOrUpdateEmployee, employeeToEdit}) => {
             onClick={handleSubmit}     
             color='#007bff'
           >
-            {employeeToEdit ? 'Update' : 'Register'}
+            {(id !== ':id') ? 'Update' : 'Register'}
           </CustomButton>
           <hr />
         <CustomButton onClick={() => {

@@ -1,7 +1,6 @@
 // App.js
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import { Button } from "@mui/material";
 import "./App.css";
 
 import EmployeeForm from "./pages/EmployeeForm";
@@ -12,18 +11,14 @@ import FetchedEmployeesList from "./pages/FetchedEmployeesList";
 import ShowEmployeeDetails from './pages/ShowEmployeeDetails';
 
 function App() {
-  const [employees, setEmployees] = useState([]);
-  const [employeeToEdit, setEmployeeToEdit] = useState({});
- 
+  const [employees, setEmployees] = useState([]); 
   const [fetchedUsers, setFetchedUsers] =useState([]);
   const [selectedEmp, setSelectedEmp] = useState({});
   useEffect(() => {
    getUsersFromAPI();
   }, []);
   
-  const handleEmployeeFormNavigation = () => {
-    setEmployeeToEdit(null);
-  };
+ 
 
   const getUsersFromAPI = async () => {
     const response = await axios.get('https://jsonplaceholder.typicode.com/users');
@@ -46,10 +41,7 @@ function App() {
     setEmployees(employees.filter((emp) => emp.empid !== empid));
   }
 
-  const setNewEmployeeToEdit = (employee) =>{
-    // console.log("fetched employee selected", employee);
-    setEmployeeToEdit(employee);    
-  }
+
   const setSelectedFetchedEmployee = (selectedEmployee) => {
     setSelectedEmp(selectedEmployee);
   }
@@ -58,9 +50,9 @@ function App() {
     <Router>
       <div className="App">        
         <Routes>
-          <Route path="/" element={<Home handleEmployeeFormNavigation={handleEmployeeFormNavigation}/>}/>
-          <Route path="/employee-form" element={<EmployeeForm addOrUpdateEmployee={addOrUpdateEmployee} employeeToEdit={employeeToEdit} />} />
-          <Route path="/display-list" element={<EmployeeList employees={employees} setNewEmployeeToEdit={setNewEmployeeToEdit} deleteEmployee={deleteEmployee}/>} />
+          <Route path="/" element={<Home/>}/>
+          <Route path="/employee-form/:id" element={<EmployeeForm addOrUpdateEmployee={addOrUpdateEmployee} employees={employees} />} />
+          <Route path="/display-list" element={<EmployeeList employees={employees} deleteEmployee={deleteEmployee}/>} />
           <Route path="/fetched-employees" element={<FetchedEmployeesList fetchedUsers={fetchedUsers} setSelectedFetchedEmployee={setSelectedFetchedEmployee}/>} />
           <Route path="/show-selected-employees" element={<ShowEmployeeDetails employee={selectedEmp}/>}></Route>
         </Routes>

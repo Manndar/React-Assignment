@@ -6,7 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CustomButton from "../customComp/CustomButton";
 import ConfirmationBox from "../customComp/ConfirmationBox";
 
-const EmployeeList = ({ employees , setNewEmployeeToEdit, deleteEmployee}) => {
+const EmployeeList = ({ employees ,deleteEmployee}) => {
     const navigate = useNavigate();
     const [confirmation, setConfirmation] = useState(false);
     const [idToDlt, setIdToDlt] = useState(0);
@@ -25,9 +25,10 @@ const EmployeeList = ({ employees , setNewEmployeeToEdit, deleteEmployee}) => {
     }
 
     const handleEdit = (employeeId) => {
-        const employeeToEdit = employees.find((employee) => employee.empid === employeeId);       
-        setNewEmployeeToEdit(employeeToEdit);
-        navigate('/employee-form', {state : {employeeToEdit}});
+        // const employeeToEdit = employees.find((employee) => employee.empid === employeeId);       
+        // setNewEmployeeToEdit(employeeToEdit);
+        // navigate('/employee-form', {state : {employeeToEdit}});
+        navigate(`/employee-form/${employeeId}`)
     };
 
     const handleDelete = (idToDlt) => {
