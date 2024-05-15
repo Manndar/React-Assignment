@@ -35,7 +35,6 @@ const EmployeeList = ({ employees ,deleteEmployee}) => {
         if(idToDlt){
             deleteEmployee(idToDlt);
         }
-        // console.log(`Delete employee with ID: ${employeeId}`);
     };
 
     return (
@@ -45,8 +44,8 @@ const EmployeeList = ({ employees ,deleteEmployee}) => {
             </Typography>
             <CustomButton onClick={onHomeClick}>Home</CustomButton>{' '}
             <CustomButton onClick={() => {
-            navigate(-1);
-        }}>Back</CustomButton>
+                navigate(-1);
+                }}>Back</CustomButton>
 
             <List>
                 {employees.map((employee, index) => (
