@@ -3,14 +3,16 @@ import { Grid, Typography} from '@mui/material';
 import { useNavigate , useParams } from "react-router-dom";
 import CustomButton from "../customComp/CustomButton";
 import CustomTextField from "../customComp/CustomTextField";
+import { useSelector, useDispatch } from "react-redux";
+import { addOrUpdateEmployee } from "../redux/actions/actions";
 
-
-
-const EmployeeForm = ({addOrUpdateEmployee, employees}) => {   
+const EmployeeForm = () => {   
     const navigate = useNavigate();
     const {id} = useParams(); 
-    console.log("type id", typeof id);   
-    console.log("id", id);   
+    const dispatch = useDispatch();
+
+    const employees = useSelector(state => state.employees);
+
     const [formData, setFormData] = useState({
         empid:  Math.floor(Math.random() * 100) + 1,
         firstName:  '',
@@ -33,7 +35,7 @@ const EmployeeForm = ({addOrUpdateEmployee, employees}) => {
         department:employee.department
       })
     }
-  },[id])
+  },[id, employees])
 
     const handleOnChange = (e) => {
         const {name, value} = e.target;
@@ -45,7 +47,7 @@ const EmployeeForm = ({addOrUpdateEmployee, employees}) => {
      
     const handleSubmit = (e) =>{
         e.preventDefault();
-        addOrUpdateEmployee(formData);
+        dispatch(addOrUpdateEmployee(formData));
         setFormData({
             empid:0,
             firstName : '',
@@ -104,9 +106,8 @@ const EmployeeForm = ({addOrUpdateEmployee, employees}) => {
             value={formData.phoneNumber}
             onChange={handleOnChange}
           />
-          <CustomTextField
-            
-            required
+          <CustomTextField            
+            required 
             fullWidth
             id="department"
             label="Department"

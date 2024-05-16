@@ -5,15 +5,22 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CustomButton from "../customComp/CustomButton";
 import ConfirmationBox from "../customComp/ConfirmationBox";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteEmployee } from "../redux/actions/actions";
 
-const EmployeeList = ({ employees ,deleteEmployee}) => {
+
+const EmployeeList = () => {
     const navigate = useNavigate();
     const [confirmation, setConfirmation] = useState(false);
     const [idToDlt, setIdToDlt] = useState(0);
+    const dispatch = useDispatch();
 
-    const handleConfirm = (id) =>{
-        
-        handleDelete(idToDlt);
+    const employees = useSelector(state => state.employees)
+    // console.log(employees);
+
+    const handleConfirm = () => {
+        console.log('idtodelete', idToDlt);
+        dispatch(deleteEmployee(idToDlt));
         setConfirmation(false);
     }
 
@@ -25,17 +32,10 @@ const EmployeeList = ({ employees ,deleteEmployee}) => {
     }
 
     const handleEdit = (employeeId) => {
-        // const employeeToEdit = employees.find((employee) => employee.empid === employeeId);       
-        // setNewEmployeeToEdit(employeeToEdit);
-        // navigate('/employee-form', {state : {employeeToEdit}});
-        navigate(`/employee-form/${employeeId}`)
+         navigate(`/employee-form/${employeeId}`)
     };
 
-    const handleDelete = (idToDlt) => {
-        if(idToDlt){
-            deleteEmployee(idToDlt);
-        }
-    };
+    
 
     return (
         <div>
@@ -52,12 +52,12 @@ const EmployeeList = ({ employees ,deleteEmployee}) => {
                     <ListItem key={index} sx={{backgroundColor: index % 2 === 0 ?'whitesmoke':'#fff' }}>
                         <ListItemText
                             primary={`${employee.firstName} ${employee.lastName}`}
-                            secondary={`Email: ${employee.email}, Phone Number: ${employee.phoneNumber}, Department: ${employee.department}`}
+                            secondary={`Id: ${employee.empid} Email: ${employee.email}, Phone Number: ${employee.phoneNumber}, Department: ${employee.department}`}
                         />
                         <IconButton onClick={() => handleEdit(employee.empid)}>
                             <EditIcon />
                         </IconButton>
-                        <IconButton onClick={() => {setConfirmation(true); setIdToDlt(employee.empid)}}>
+                        <IconButton onClick={() => {setIdToDlt(employee.empid); setConfirmation(true); }}>
                             <DeleteIcon />
                         </IconButton>
                     </ListItem>

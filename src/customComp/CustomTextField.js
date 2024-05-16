@@ -1,5 +1,5 @@
 import React from 'react';
-import TextField from '@mui/material/TextField';
+import {TextField } from '@mui/material';
 
 function CustomTextField({ id, label, name, type, value, onChange, required, fullWidth }) {
   return (
