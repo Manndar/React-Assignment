@@ -1,10 +1,13 @@
 import React from 'react';
 import CustomButton from '../customComp/CustomButton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-function ShowEmployeeDetails({ employee }) {
-  const { id, name, username, email, address, phone, website, company } = employee;
+function ShowEmployeeDetails() {
   const navigate = useNavigate();
+  let location = useLocation();
+  const employee = location.state.newEmp;
+  console.log("Employee", employee);
+  const { id, name, username, email, address, phone, website, company } = employee;
 
   return (
     <div>

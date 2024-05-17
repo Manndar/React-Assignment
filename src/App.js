@@ -9,8 +9,6 @@ import FetchedEmployeesList from "./pages/FetchedEmployeesList";
 import ShowEmployeeDetails from "./pages/ShowEmployeeDetails";
 
 function App() {
-
-
   return (
     <Router>
       <div className="App">
@@ -19,9 +17,7 @@ function App() {
           <Route path="/employee-form/:id" element={<EmployeeForm />} />
           <Route path="/display-list" element={<EmployeeList />} />
           <Route path="/fetched-employees" element={<FetchedEmployeesList />} />
-          <Route
-            path="/show-selected-employees"
-            element={<ShowEmployeeDetails  />}
+          <Route path="/show-selected-employees" element={<ShowEmployeeDetails />}
           ></Route>
         </Routes>
       </div>
